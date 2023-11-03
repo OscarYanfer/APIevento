@@ -9,8 +9,8 @@ export const EventType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
-    registered: { type: GraphQLDateTime },
-    updated: { type: GraphQLDateTime },
+    registered: { type: GraphQLString },
+    updated: { type: GraphQLString },
     status: { type: GraphQLInt },
   }),
 });

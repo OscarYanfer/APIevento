@@ -13,25 +13,26 @@ import { evento } from "../../Entities/evento";
 import { hashPassword, comparePassword } from "../../libs/bcrypt";
 import { MessageType } from "../TypeDefs/Message";
 import { EventType } from "../TypeDefs/event";
-import { GraphQLDateTime } from '../TypeDefs/datetime'; // Asegúrate de importar correctamente
+//import { GraphQLDateTime } from '../TypeDefs/datetime'; // Asegúrate de importar correctamente
 
 export const CREATE_EVENT = {
   type: EventType,
   args: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: new GraphQLNonNull(GraphQLString) },
-    registered: { type: new GraphQLNonNull(GraphQLDateTime) },
-    updated: { type: new GraphQLNonNull(GraphQLDateTime) },
+    registered: {  type: GraphQLString  },
+    updated: {  type: GraphQLString  },
     status: { type: new GraphQLNonNull(GraphQLInt) },
   },
   async resolve(parent: any, args: any) {
-    const { name, description, registered, updated, status } = args;
-
+    const { name, description, status } = args;
+    const registered = new Date().toISOString();
+    
     const result = await evento.insert({
-        name, description, registered, updated, status,
+        name, description, registered, status
     });
     
-    return { ...args};
+    return { ...args, id: result.identifiers[0].id, registered};
   },
 };
 
@@ -57,8 +58,8 @@ export const UPDATE_EVENT = {
         fields: () => ({
           name: { type: new GraphQLNonNull(GraphQLString) },
           description: { type: new GraphQLNonNull(GraphQLString) },
-          registered: { type: new GraphQLNonNull(GraphQLDateTime) },
-          updated: { type: new GraphQLNonNull(GraphQLDateTime) },
+          registered: { type: new GraphQLNonNull(GraphQLString) },
+          updated: { type: new GraphQLNonNull(GraphQLString) },
           status: { type: new GraphQLNonNull(GraphQLInt) },
         }),
       }),

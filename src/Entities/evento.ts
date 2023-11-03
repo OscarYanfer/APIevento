@@ -12,10 +12,10 @@ export class evento extends BaseEntity {
   description: string;
 
   @Column()
-  registered: Date;
+  registered: string;
 
   @Column()
-  updated: Date;
+  updated: string;
 
   @Column()
   status: number;
