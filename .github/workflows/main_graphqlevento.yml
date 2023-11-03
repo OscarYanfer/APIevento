@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: '16.x'
 
+      - name: Install GraphQL and other dependencies
+        run: npm install graphql
+
       - name: npm install, build, and test
         run: |
           npm install
